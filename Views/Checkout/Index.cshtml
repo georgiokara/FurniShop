@@ -1,0 +1,78 @@
+@model CheckoutViewModel
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="hero">
+    <div class="container">
+        <div class="intro-excerpt"><h1>Checkout</h1></div>
+    </div>
+</div>
+
+<div class="untree_co-section before-footer-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <form asp-controller="Checkout" asp-action="Index" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="ShippingName" class="text-black">Full Name</label>
+                            <input asp-for="ShippingName" class="form-control py-3" />
+                            <span asp-validation-for="ShippingName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="ShippingAddress" class="text-black">Address</label>
+                            <input asp-for="ShippingAddress" class="form-control py-3" />
+                            <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ShippingCity" class="text-black">City</label>
+                            <input asp-for="ShippingCity" class="form-control py-3" />
+                            <span asp-validation-for="ShippingCity" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ShippingPhone" class="text-black">Phone</label>
+                            <input asp-for="ShippingPhone" class="form-control py-3" />
+                            <span asp-validation-for="ShippingPhone" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-black btn-lg py-3 btn-block">Place Order</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-5 pl-5">
+                <h3 class="text-black h4 text-uppercase border-bottom pb-3 mb-3">Order Summary</h3>
+                @foreach (var line in Model.Cart.Lines)
+                {
+                    <div class="row mb-2">
+                        <div class="col-8">@line.ProductName &times; @line.Quantity</div>
+                        <div class="col-4 text-right">@line.LineTotal.ToString("C")</div>
+                    </div>
+                }
+                <div class="row mt-3">
+                    <div class="col-8">Subtotal</div>
+                    <div class="col-4 text-right">@Model.Cart.Subtotal.ToString("C")</div>
+                </div>
+                @if (Model.Cart.DiscountPercent > 0)
+                {
+                    <div class="row">
+                        <div class="col-8">Discount (@Model.Cart.AppliedCouponCode)</div>
+                        <div class="col-4 text-right">-@Model.Cart.DiscountAmount.ToString("C")</div>
+                    </div>
+                }
+                <div class="row mt-2 border-top pt-2">
+                    <div class="col-8"><strong>Total</strong></div>
+                    <div class="col-4 text-right"><strong>@Model.Cart.Total.ToString("C")</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

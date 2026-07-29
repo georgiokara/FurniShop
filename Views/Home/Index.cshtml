@@ -1,0 +1,48 @@
+@model List<Product>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="hero">
+    <div class="container">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-lg-6">
+                <div class="intro-excerpt">
+                    <h1>Furniture that fits your home</h1>
+                    <p class="mb-4">Browse our catalog and shop chairs, sofas and decor.</p>
+                    <p><a asp-controller="Shop" asp-action="Index" class="btn btn-primary me-2">Shop Now</a></p>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <img src="~/images/couch.png" class="img-fluid" alt="Couch">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="untree_co-section product-section before-footer-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title">Featured Products</h2>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-12 col-md-4 col-lg-4 mb-5">
+                    <div class="product-item">
+                        <img src="~/@product.ImageUrl" class="img-fluid product-thumbnail" alt="@product.Name">
+                        <h3 class="product-title">@product.Name</h3>
+                        <strong class="product-price">@product.Price.ToString("C")</strong>
+                        <form asp-controller="Cart" asp-action="Add" method="post" class="mt-2">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn btn-black btn-sm">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

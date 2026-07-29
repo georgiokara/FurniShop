@@ -1,0 +1,13 @@
+@model Order
+@{
+    ViewData["Title"] = "Thank You";
+}
+
+<div class="untree_co-section before-footer-section">
+    <div class="container text-center">
+        <h1 class="mb-3">Thank you, @Model.ShippingName!</h1>
+        <p>Your order #@Model.Id has been placed for @Model.Total.ToString("C").</p>
+        <p>We'll ship it to @Model.ShippingAddress, @Model.ShippingCity.</p>
+        <a asp-controller="Shop" asp-action="Index" class="btn btn-black mt-3">Continue Shopping</a>
+    </div>
+</div>
