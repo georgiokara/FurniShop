@@ -2,4 +2,5 @@ bin/
 obj/
 .vs/
 *.user
-appsettings.*.local.json
+appsettings.*.json
+!appsettings.json
